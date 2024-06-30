@@ -17,9 +17,9 @@ class DiscordColumnResizer {
        
        /* Define the width variables for different elements */
        :root {
-           --profile-banner-width: 20px; /* Width of the profile banner */
-           --dm-people-column-width: 20px; /* Width of the DM people column */
-           --server-member-list-width: 26px; /* Width of the server member list */
+           --profile-banner-width: 200px; /* Width of the profile banner */
+           --dm-people-column-width: 200px; /* Width of the DM people column */
+           --server-member-list-width: 200px; /* Width of the server member list */
        }
        
        /* Modify the width of the profile banner */
