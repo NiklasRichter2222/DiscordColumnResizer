@@ -10,7 +10,7 @@
   - Profile Banner
   - DM People Column
   - Server Member List
-- (Only the Plugin version)Saves and applies width settings on restart
+- (Only the Plugin version) Saves and applies width settings on restart
 
 ## Installation
 
