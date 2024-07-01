@@ -14,13 +14,23 @@ class DiscordColumnResizer {
             dmPeopleColumn: '200px',
             serverMemberList: '200px'
         }; // Initialize widths storage
+
+        this.elements = {
+            profileBannerDiv: '#app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fb1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > div.userPanelOuter_c69a7b',
+            profileBannerAside: '#app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fb1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > aside',
+            dmPeopleColumn: '#app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fb1 > div > div > div > div > div.sidebar_a4d4d9',
+            serverMemberList: '#app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fbf1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > div.container_cbd271'
+        };
     }
 
     start() {
-        this.injectCSS();
-        this.observeElements();
-        this.loadSettings();
-        this.startCheckingWidths();
+        // Delay the execution of the start function's contents by x seconds
+        setTimeout(() => {
+            this.injectCSS();
+            this.observeElements();
+            this.loadSettings();
+            this.startCheckingWidths();
+        }, 6000);
     }
 
     stop() {
@@ -36,8 +46,7 @@ class DiscordColumnResizer {
             --dm-people-column-width: ${this.widths.dmPeopleColumn};
             --server-member-list-width: ${this.widths.serverMemberList};
         }
-        #app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fb1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > div,
-        #app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fb1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > aside {
+        ${this.elements.profileBannerDiv}, ${this.elements.profileBannerAside} {
             resize: horizontal;
             overflow: auto;
             position: relative;
@@ -45,18 +54,18 @@ class DiscordColumnResizer {
             transform: rotateY(180deg);
         }
 
-        #app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fb1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > div > *,
-        #app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fb1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > aside > * {
+        ${this.elements.profileBannerDiv} > *,
+        ${this.elements.profileBannerAside} > * {
             transform: rotateY(180deg);
         }
 
-        #app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fbf1 > div > div > div > div > div.sidebar_a4d4d9 {
+        ${this.elements.dmPeopleColumn} {
             resize: horizontal;
             width: var(--dm-people-column-width);
             overflow: auto;
         }
 
-        #app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fbf1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > div.container_cbd271 {
+        ${this.elements.serverMemberList} {
             resize: horizontal;
             overflow: auto;
             position: relative;
@@ -64,7 +73,7 @@ class DiscordColumnResizer {
             transform: rotateY(180deg);
         }
 
-        #app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fbf1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > div.container_cbd271 > * {
+        ${this.elements.serverMemberList} > * {
             transform: rotateY(180deg);
         }
         `;
@@ -76,8 +85,7 @@ class DiscordColumnResizer {
     }
 
     observeElements() {
-        const selectors = this.getSelectors();
-        Object.values(selectors).forEach(selector => {
+        Object.values(this.elements).forEach(selector => {
             const elements = document.querySelectorAll(selector);
             elements.forEach(element => {
                 this.resizeObserver.observe(element);
@@ -89,12 +97,29 @@ class DiscordColumnResizer {
         this.resizeObserver.disconnect();
     }
 
-    getSelectors() {
-        return {
-            profileBanner: '#app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fb1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > div',
-            dmPeopleColumn: '#app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fbf1 > div > div > div > div > div.sidebar_a4d4d9',
-            serverMemberList: '#app-mount > div.appAsidePanelWrapper_bd26cc > div.notAppAsidePanel_bd26cc > div.app_bd26cc > div > div.layers_d4b6c5.layers_a01fbf1 > div > div > div > div > div.chat_a7d72e > div.content_a7d72e > div.container_cbd271'
-        };
+    onResize(entries) {
+        entries.forEach(entry => {
+            const target = entry.target;
+            // Handle resize event for the element
+            this.syncWidths(target);
+        });
+    }
+
+    syncWidths(resizedElement) {
+        const width = getComputedStyle(resizedElement).width;
+
+        if (resizedElement.matches(this.elements.profileBannerDiv)) {
+            this.updateElementWidth(this.elements.profileBannerAside, width);
+        }
+    }
+
+    updateElementWidth(selector, width) {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+            element.style.width = width;
+        });
+        this.widths.profileBanner = width; // Update stored width
+        this.saveSettings(); // Save new width
     }
 
     startCheckingWidths() {
@@ -106,13 +131,11 @@ class DiscordColumnResizer {
     }
 
     checkAndSaveSettings() {
-        const selectors = this.getSelectors();
         let hasChanges = false;
 
-        Object.keys(selectors).forEach(key => {
-            const selector = selectors[key];
+        Object.keys(this.elements).forEach(key => {
+            const selector = this.elements[key];
             const elements = document.querySelectorAll(selector);
-
             elements.forEach(element => {
                 const currentWidth = getComputedStyle(element).width;
 
@@ -136,7 +159,7 @@ class DiscordColumnResizer {
         });
 
         // Save settings
-        BdApi.Data.save("myPlugin", "settings", settings);
+        BdApi.Data.save("DiscordColumnResizer", "settings", settings);
 
         // Update CSS variables
         this.updateCSSVariables();
@@ -163,7 +186,7 @@ class DiscordColumnResizer {
     }
 
     loadSettings() {
-        const savedSettings = BdApi.Data.load("myPlugin", "settings") || {};
+        const savedSettings = BdApi.Data.load("DiscordColumnResizer", "settings") || {};
 
         for (const [key, value] of Object.entries(savedSettings)) {
             const selector = this.getSelectorForKey(key);
@@ -179,7 +202,6 @@ class DiscordColumnResizer {
     }
 
     getSelectorForKey(key) {
-        const selectors = this.getSelectors();
-        return selectors[key];
+        return this.elements[key];
     }
 }
