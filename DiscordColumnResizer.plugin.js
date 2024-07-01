@@ -8,7 +8,7 @@
 class DiscordColumnResizer {
     constructor() {
         this.resizeObserver = new ResizeObserver(entries => this.onResize(entries));
-        this.checkInterval = 1000; // 10 seconds
+        this.checkInterval = 5000; // 5 seconds
         this.widths = {
             profileBanner: '200px',
             dmPeopleColumn: '200px',
