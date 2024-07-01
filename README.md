@@ -1,7 +1,7 @@
 # DiscordColumnResizer
 
 **Author:** Niklas  
-**Version:** 1.0.0  
+**Version:** 1.3.2 
 **Description:** Customize the width of columns in Discord for a personalized layout.
 
 ## Features
